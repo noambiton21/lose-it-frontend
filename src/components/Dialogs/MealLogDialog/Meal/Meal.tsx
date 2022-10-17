@@ -8,13 +8,14 @@ import { addMeal, getMeal } from "../../../../services/meal.service";
 export type MealProps = {
   mealType: string;
   onDone: () => void;
+  date:string;
 };
 
-export const Meal = ({ mealType, onDone }: MealProps) => {
+export const Meal = ({ mealType, onDone ,date}: MealProps) => {
   const [tempFoods, setTempFoods] = useState<MealFoods>([]);
 
   useEffect(() => {
-    const date = new Date().toISOString().slice(0, 10);
+    // const date = new Date().toISOString().slice(0, 10);
     getMeal(mealType, date).then((foods: MealFoods) => {
       setTempFoods(foods);
       console.log(foods);
