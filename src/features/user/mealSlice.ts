@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { MealOptions } from "../../types/meal.type";
+import { MealOptions,MealsCalories } from "../../types/meal.type";
 
 type MealState = {
     isLoadingMealOptions: boolean;
     hasMealOptionsError: boolean;
-    mealOptions?: MealOptions;
+    mealOptions?: MealsCalories;
 }
 
 const initialState: MealState = {
@@ -19,7 +19,7 @@ export const mealSlice = createSlice({
         mealOptionsLoading: (state) => {
             state.isLoadingMealOptions = true;
         },
-        mealOptionsLoaded: (state, action: PayloadAction<MealOptions>) => {
+        mealOptionsLoaded: (state, action: PayloadAction<MealsCalories>) => {
             state.mealOptions = action.payload;
             state.isLoadingMealOptions = false;
         },

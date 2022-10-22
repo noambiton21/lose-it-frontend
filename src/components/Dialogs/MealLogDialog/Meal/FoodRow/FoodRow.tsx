@@ -10,7 +10,7 @@ import { getFoodCalories } from "../../../../../services/meal.service";
 export type FoodRowProps = {
   food: MealFood;
   onDelete: () => void;
-  onSave: (name: string, serving: number) => void;
+  onSave: (name: string, serving: number, calories: number) => void;
   onEdit: () => void;
 };
 
@@ -28,7 +28,7 @@ export const FoodRow = ({ food, onDelete, onSave, onEdit }: FoodRowProps) => {
   const [tempCalories, setTempCalories] = useState(food.calories);
 
   useEffect(() => {
-    getFoodCalories(selectedFood.label).then((calories: number) => {
+    getFoodCalories(selectedFood?.label).then((calories: number) => {
       if (tempServing > 0) {
         setTempCalories(calories * tempServing);
         food.calories = calories * tempServing;
@@ -37,7 +37,7 @@ export const FoodRow = ({ food, onDelete, onSave, onEdit }: FoodRowProps) => {
         food.calories = calories;
       }
     });
-  }, [selectedFood.label, tempServing]);
+  }, [selectedFood?.label, tempServing]);
 
   return (
     <TableRow>
@@ -70,7 +70,9 @@ export const FoodRow = ({ food, onDelete, onSave, onEdit }: FoodRowProps) => {
         {food.edit ? (
           <IconButton
             size="small"
-            onClick={() => onSave(selectedFood.label, tempServing)}
+            onClick={() =>
+              onSave(selectedFood.label, tempServing, tempCalories)
+            }
           >
             <SaveIcon fontSize="inherit" />
           </IconButton>

@@ -4,18 +4,20 @@ import { FoodTable } from "./FoodTable/FoodTable";
 import { MealFoods } from "../../../../types/meal.type";
 import { v4 as uuidv4 } from "uuid";
 import { addMeal, getMeal } from "../../../../services/meal.service";
+import { sagaActions } from "../../../../sagas/sagaActions";
+import { useAppDispatch } from "../../../../hooks/typed-redux";
 
 export type MealProps = {
   mealType: string;
   onDone: () => void;
-  date:string;
+  date: string;
 };
 
-export const Meal = ({ mealType, onDone ,date}: MealProps) => {
+export const Meal = ({ mealType, onDone, date }: MealProps) => {
   const [tempFoods, setTempFoods] = useState<MealFoods>([]);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    // const date = new Date().toISOString().slice(0, 10);
     getMeal(mealType, date).then((foods: MealFoods) => {
       setTempFoods(foods);
       console.log(foods);
@@ -43,7 +45,7 @@ export const Meal = ({ mealType, onDone ,date}: MealProps) => {
   );
 
   const handleSaveRow = useCallback(
-    (index: number, name: string, serving: number) => {
+    (index: number, name: string, serving: number, calories: number) => {
       const tempFoodsCopy = [...tempFoods];
       tempFoodsCopy[index].foodName = name;
       tempFoodsCopy[index].servingSize = serving;
@@ -52,23 +54,34 @@ export const Meal = ({ mealType, onDone ,date}: MealProps) => {
 
       setTempFoods(tempFoodsCopy);
 
-      console.log(tempFoods);
-    },
-    [tempFoods, setTempFoods]
-  );
+      const newFood = {
+        foodName: name,
+        servingSize: serving,
+        calories: calories,
+        edit: false,
+        mealType: mealType,
+        id: uuidv4(),
+      };
 
-  const handleDone = (e) => {
-    e.preventDefault();
-    tempFoods.map((tempFood) =>
-      addMeal(tempFood).then(
+      addMeal(newFood).then(
         (response) => {
           console.log(response);
         },
         (error) => {
           console.log(error);
         }
-      )
-    );
+      );
+    },
+    [tempFoods, setTempFoods]
+  );
+
+  const handleDone = () => {
+    dispatch({
+      type: sagaActions.FETCH_MEAL_OPTIONS,
+      payload: date,
+    });
+
+    dispatch({ type: sagaActions.FETCH_TOTAL_DAY_CALORIES });
     onDone();
   };
 

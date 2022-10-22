@@ -4,6 +4,7 @@ import {
   MealFoods,
   MealOptions,
   FoodOptionDetails,
+  MealsCalories,
 } from "../types/meal.type";
 import config from "../config.json";
 
@@ -37,4 +38,14 @@ export const getMeal = (mealType: string, date: string): Promise<MealFoods> => {
   return axios
     .get(`${config.apiUrl}/meal?mealType=${mealType}&date=${date}`)
     .then((res) => res.data);
+};
+
+export const getMealsCalories = (date: string): Promise<MealsCalories> => {
+  return axios
+    .get(`${config.apiUrl}/mealsCalories?date=${date}`)
+    .then((res) => res.data);
+};
+
+export const getTotalDayCalories = (): Promise<number> => {
+  return axios.get(`${config.apiUrl}/totalDayCalories`).then((res) => res.data);
 };

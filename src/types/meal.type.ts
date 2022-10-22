@@ -5,8 +5,17 @@ export type MealOption = {
   displayName: string;
 };
 
-export type MealFoods = MealFood[];
+export type MealsCalories = MealCalories[];
 
+export type MealCalories = {
+  _doc: {
+    displayName: string;
+    type: string;
+  };
+  totalCalories: number;
+};
+
+export type MealFoods = MealFood[];
 export type MealFood = {
   foodName: string;
   servingSize: number;
