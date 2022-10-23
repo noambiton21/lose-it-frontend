@@ -20,7 +20,6 @@ export const Meal = ({ mealType, onDone, date }: MealProps) => {
   useEffect(() => {
     getMeal(mealType, date).then((foods: MealFoods) => {
       setTempFoods(foods);
-      console.log(foods);
     });
   }, []);
 
@@ -82,6 +81,8 @@ export const Meal = ({ mealType, onDone, date }: MealProps) => {
     });
 
     dispatch({ type: sagaActions.FETCH_TOTAL_DAY_CALORIES });
+
+    dispatch({ type: sagaActions.FETCH_TODAY_MEALS });
     onDone();
   };
 

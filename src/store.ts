@@ -8,6 +8,7 @@ import { weightHistorySlice } from "./features/user/weightHistorySlice";
 import { dialogSlice } from "./features/user/dialogSlice";
 import { mealSlice } from "./features/user/mealSlice";
 import { dayCaloriesSlice } from "./features/user/dayCaloriesSlice";
+import { todayMealsSlice } from "./features/user/todayMealsSlice";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -18,6 +19,7 @@ const store = configureStore({
     dialog: dialogSlice.reducer,
     meal: mealSlice.reducer,
     dayCalories: dayCaloriesSlice.reducer,
+    todayMeals: todayMealsSlice.reducer,
   },
   middleware: [sagaMiddleware],
 });

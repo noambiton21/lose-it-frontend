@@ -40,6 +40,12 @@ export const getMeal = (mealType: string, date: string): Promise<MealFoods> => {
     .then((res) => res.data);
 };
 
+export const getMeals = (date: string): Promise<MealFoods> => {
+  return axios
+    .get(`${config.apiUrl}/meals?date=${date}`)
+    .then((res) => res.data);
+};
+
 export const getMealsCalories = (date: string): Promise<MealsCalories> => {
   return axios
     .get(`${config.apiUrl}/mealsCalories?date=${date}`)
