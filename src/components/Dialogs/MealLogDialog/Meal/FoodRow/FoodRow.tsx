@@ -10,7 +10,12 @@ import { getFoodCalories } from "../../../../../services/meal.service";
 export type FoodRowProps = {
   food: MealFood;
   onDelete: () => void;
-  onSave: (name: string, serving: number, calories: number) => void;
+  onSave: (
+    name: string,
+    serving: number,
+    calories: number,
+    imageUrl: string
+  ) => void;
   onEdit: () => void;
 };
 
@@ -29,12 +34,14 @@ export const FoodRow = ({ food, onDelete, onSave, onEdit }: FoodRowProps) => {
 
   useEffect(() => {
     getFoodCalories(selectedFood?.label).then((calories: number) => {
+      console.log(selectedFood.imageUrl);
+      food.imageUrl = selectedFood.imageUrl;
       if (tempServing > 0) {
-        setTempCalories(calories * tempServing);
-        food.calories = calories * tempServing;
+        setTempCalories(Math.trunc(calories * tempServing));
+        food.calories = Math.trunc(calories * tempServing);
       } else {
-        setTempCalories(calories);
-        food.calories = calories;
+        setTempCalories(Math.trunc(calories));
+        food.calories = Math.trunc(calories);
       }
     });
   }, [selectedFood?.label, tempServing]);
@@ -71,7 +78,12 @@ export const FoodRow = ({ food, onDelete, onSave, onEdit }: FoodRowProps) => {
           <IconButton
             size="small"
             onClick={() =>
-              onSave(selectedFood.label, tempServing, tempCalories)
+              onSave(
+                selectedFood.label,
+                tempServing,
+                tempCalories,
+                selectedFood.imageUrl
+              )
             }
           >
             <SaveIcon fontSize="inherit" />

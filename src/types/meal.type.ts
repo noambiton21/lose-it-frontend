@@ -20,6 +20,7 @@ export type MealFood = {
   foodName: string;
   servingSize: number;
   calories: number;
+  imageUrl: string;
   edit: boolean;
   id: string;
   mealType: string;

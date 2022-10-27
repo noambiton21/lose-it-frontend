@@ -58,13 +58,4 @@ export default function* mealSaga() {
   yield takeLatest(sagaActions.FETCH_MEAL_OPTIONS, fetch);
   yield takeLatest(sagaActions.FETCH_TOTAL_DAY_CALORIES, fetchTotalDayCalories);
   yield takeLatest(sagaActions.FETCH_TODAY_MEALS, fetchTodayMeals);
-  //   yield takeLatest(sagaActions.ADD_MEAL, add);
 }
-
-// function* add(action) {
-//   try {
-//     yield addMealOptions(action.payload);
-//   } catch (ex) {
-//     yield;
-//   }
-// }

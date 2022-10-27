@@ -44,7 +44,13 @@ export const Meal = ({ mealType, onDone, date }: MealProps) => {
   );
 
   const handleSaveRow = useCallback(
-    (index: number, name: string, serving: number, calories: number) => {
+    (
+      index: number,
+      name: string,
+      serving: number,
+      calories: number,
+      imageUrl: string
+    ) => {
       const tempFoodsCopy = [...tempFoods];
       tempFoodsCopy[index].foodName = name;
       tempFoodsCopy[index].servingSize = serving;
@@ -60,7 +66,9 @@ export const Meal = ({ mealType, onDone, date }: MealProps) => {
         edit: false,
         mealType: mealType,
         id: uuidv4(),
+        imageUrl: imageUrl,
       };
+      console.log(newFood);
 
       addMeal(newFood).then(
         (response) => {
@@ -105,6 +113,7 @@ export const Meal = ({ mealType, onDone, date }: MealProps) => {
             {
               foodName: "",
               servingSize: 1,
+              imageUrl: "",
               calories: 0,
               edit: true,
               id: uuidv4(),

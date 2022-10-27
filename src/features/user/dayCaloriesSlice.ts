@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { TotalCalories } from "../../types/dayCalories.type";
+import { TotalCaloriesEntry } from "../../types/dayCalories.type";
 
 type dayCaloriesState = {
   isLoading: boolean;
   hasError: boolean;
-  totalDayCalories?: TotalCalories;
+  totalDayCalories?: TotalCaloriesEntry;
 };
 
 const initialState: dayCaloriesState = {

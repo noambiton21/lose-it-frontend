@@ -12,7 +12,9 @@ function* login(action) {
   const { email, password } = action.payload;
 
   try {
+    //const token =
     yield userService.login(email, password);
+
     window.location.href = "/";
   } catch (ex) {
     yield put(displayLoginError());
@@ -23,6 +25,7 @@ function* register(action) {
   const { email, password } = action.payload;
 
   try {
+    //const token =
     yield userService.register(email, password);
     window.location.href = "/";
   } catch (ex) {
@@ -41,11 +44,13 @@ function* onboard(action) {
 
 function* getUserData() {
   try {
+    //take the token from localstorage and send in getUser
     const user = yield userService.getUser();
 
     if (user) {
       yield put(loggedIn(user));
       yield put({ type: sagaActions.FETCH_WEIGHT_HISTORY });
+      yield put({ type: sagaActions.FETCH_WORKOUT });
       yield put({ type: sagaActions.FETCH_MEAL_OPTIONS });
       yield put({ type: sagaActions.FETCH_TOTAL_DAY_CALORIES });
       yield put({ type: sagaActions.FETCH_TODAY_MEALS });

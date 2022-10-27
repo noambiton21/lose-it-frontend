@@ -2,7 +2,7 @@ import React from "react";
 import { InformationCard } from "../../../shared-components/InformationCard";
 import { useAppSelector } from "../../../hooks/typed-redux";
 import DisplayMeal from "./DisplayMeal";
-import { Divider, List, Card } from "@mui/material";
+import { Divider, List, Card, Typography } from "@mui/material";
 
 export const Meals = () => {
   const { todayMeals, isLoading, hasError } = useAppSelector(
@@ -12,7 +12,6 @@ export const Meals = () => {
 
   return (
     <>
-      <h4>You have almost reached your daily goal</h4>
       {!isLoading && !hasError && todayMeals?.length > 0 ? (
         <Card
           sx={{
@@ -20,6 +19,7 @@ export const Meals = () => {
             margin: "20px auto",
             width: "80%",
             justifyContent: "space-between",
+            backgroundColor: "#fafbfb",
           }}
         >
           <List>
@@ -31,7 +31,13 @@ export const Meals = () => {
                     return meal.mealType === mealOption._doc.type;
                   }).length > 0 ? (
                     <>
-                      <h3>{mealOption._doc.displayName}</h3>
+                      <Typography
+                        sx={{ display: "inline" }}
+                        variant="h6"
+                        color="text.primary"
+                      >
+                        {mealOption._doc.displayName}
+                      </Typography>
                       <DisplayMeal
                         meals={todayMeals?.filter((meal) => {
                           return meal.mealType == mealOption._doc.type;

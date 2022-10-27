@@ -33,17 +33,24 @@ export const CalorieGoal = () => {
   );
 
   useEffect(() => {
-    setLinearProgress(
-      ((Number(totalDayCalories) / user.calorieGoal) * 100).toFixed()
-    );
-  }, totalDayCalories);
+    const updatedLinearProgress = (
+      (Number(totalDayCalories) / user.calorieGoal) *
+      100
+    ).toFixed();
+    if (Number(updatedLinearProgress) > 100) {
+      setLinearProgress("100");
+    } else {
+      setLinearProgress(updatedLinearProgress);
+    }
+  }, [totalDayCalories]);
 
   return (
     <Box margin="30px 0">
       <Typography variant="h5" gutterBottom>
         {!isLoading && !hasError && totalDayCalories ? (
           <>
-            Calories goal: {totalDayCalories} /{user.calorieGoal}
+            Calories goal: {Math.trunc(Number(totalDayCalories))} /
+            {user.calorieGoal}
           </>
         ) : (
           <>

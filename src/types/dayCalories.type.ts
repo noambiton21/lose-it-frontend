@@ -1,5 +1,5 @@
-export type totalCaloriesEntry = {
+export type TotalCaloriesEntry = {
   totalCalories: number;
 };
 
-export type TotalCalories = totalCaloriesEntry[];
+export type TotalCalories = TotalCaloriesEntry[];

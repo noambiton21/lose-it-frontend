@@ -19,7 +19,8 @@ export type FoodTableProps = {
     index: number,
     name: string,
     serving: number,
-    calories: number
+    calories: number,
+    imageUrl: string
   ) => void;
 };
 
@@ -51,9 +52,12 @@ export const FoodTable = ({
                 key={food.id}
                 food={food}
                 onDelete={() => onRowDelete(index)}
-                onSave={(name: string, serving: number, calories: number) =>
-                  onRowSave(index, name, serving, calories)
-                }
+                onSave={(
+                  name: string,
+                  serving: number,
+                  calories: number,
+                  imageUrl: string
+                ) => onRowSave(index, name, serving, calories, imageUrl)}
                 onEdit={() => onRowEdit(index)}
               />
             ))}
