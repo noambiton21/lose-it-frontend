@@ -12,21 +12,43 @@ function* login(action) {
   const { email, password } = action.payload;
 
   try {
-    //const token =
-    yield userService.login(email, password);
-
+    const resData = yield userService.login(email, password);
+    console.log(resData);
+    const tokenExpirationDate = new Date(new Date().getTime() + 1000 * 60 * 60);
+    localStorage.setItem(
+      "userData",
+      JSON.stringify({
+        userId: resData.userId,
+        token: resData.token,
+        expiration: tokenExpirationDate.toISOString(),
+      })
+    );
     window.location.href = "/";
   } catch (ex) {
     yield put(displayLoginError());
   }
 }
 
+function* logout() {
+  localStorage.removeItem("userData");
+  window.location.href = "/login";
+}
+
 function* register(action) {
   const { email, password } = action.payload;
 
   try {
-    //const token =
-    yield userService.register(email, password);
+    const resData = yield userService.register(email, password);
+
+    const tokenExpirationDate = new Date(new Date().getTime() + 1000 * 60 * 60);
+    localStorage.setItem(
+      "userData",
+      JSON.stringify({
+        userId: resData.userId,
+        token: resData.token,
+        expiration: tokenExpirationDate.toISOString(),
+      })
+    );
     window.location.href = "/";
   } catch (ex) {
     yield put(displayRegisterError());
@@ -45,8 +67,13 @@ function* onboard(action) {
 function* getUserData() {
   try {
     //take the token from localstorage and send in getUser
-    const user = yield userService.getUser();
+    const storedData = JSON.parse(localStorage.getItem("userData"));
 
+    let user = false;
+    if (storedData) {
+      user = yield userService.getUser(storedData.token);
+    }
+    console.log(user);
     if (user) {
       yield put(loggedIn(user));
       yield put({ type: sagaActions.FETCH_WEIGHT_HISTORY });
@@ -65,4 +92,5 @@ export default function* userSaga() {
   yield takeLatest(sagaActions.REGISTER, register);
   yield takeLatest(sagaActions.GET_USER, getUserData);
   yield takeLatest(sagaActions.ONBOARD_USER, onboard);
+  yield takeLatest(sagaActions.LOGOUT, logout);
 }

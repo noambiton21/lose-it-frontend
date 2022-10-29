@@ -1,4 +1,5 @@
 export const sagaActions = {
+  LOGOUT: "LOGOUT",
   LOGIN: "LOGIN",
   REGISTER: "REGISTER",
   GET_USER: "GET_USER",

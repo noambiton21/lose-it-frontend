@@ -7,6 +7,7 @@ import { FloatingMenu } from "./FloatingMenu/FloatingMenu";
 import { Meals } from "./Meals/Meals";
 import { WeightChart } from "./WeightChart/WeightChart";
 import { Workouts } from "./Workouts/Workouts";
+import Logout from "../Logout/Logout";
 
 export const HomePage = () => {
   const { isLoggedIn, user } = useUser();
@@ -37,6 +38,7 @@ export const HomePage = () => {
           <Box paddingTop="50px">
             <Typography variant="h4" gutterBottom>
               Welcome back, {`${user.firstName} ${user.lastName}!`}
+              <Logout />
             </Typography>
             <Box height="20px" />
             <Divider />

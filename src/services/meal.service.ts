@@ -9,49 +9,90 @@ import {
 import config from "../config.json";
 
 export const getMealOptions = (): Promise<MealOptions> => {
-  return axios.get(`${config.apiUrl}/meal-options`).then((res) => res.data);
+  const storedData = JSON.parse(localStorage.getItem("userData"));
+  return axios
+    .get(`${config.apiUrl}/meal-options`, {
+      headers: {
+        Authorization: "Bearer " + storedData.token,
+      },
+    })
+    .then((res) => res.data);
 };
-
-// export const addMealOptions = async (type: String) => {
-//   return axios.post(`${config.apiUrl}/meal-options`, type);
-// };
 
 export const getFoodOptions = (
   searchTerm: string
 ): Promise<FoodOptionDetails> => {
+  const storedData = JSON.parse(localStorage.getItem("userData"));
   return axios
-    .get(`${config.apiUrl}/food?query=${searchTerm}`)
+    .get(`${config.apiUrl}/food?query=${searchTerm}`, {
+      headers: {
+        Authorization: "Bearer " + storedData.token,
+      },
+    })
     .then((res) => res.data);
 };
 
 export const getFoodCalories = (foodName: string): Promise<number> => {
+  const storedData = JSON.parse(localStorage.getItem("userData"));
   return axios
-    .get(`${config.apiUrl}/food-calories?query=${foodName}`)
+    .get(`${config.apiUrl}/food-calories?query=${foodName}`, {
+      headers: {
+        Authorization: "Bearer " + storedData.token,
+      },
+    })
     .then((res) => res.data);
 };
 
 export const addMeal = async (meal: MealFood): Promise<void> => {
-  return axios.post(`${config.apiUrl}/meal`, meal);
+  console.log("add meal");
+  const storedData = JSON.parse(localStorage.getItem("userData"));
+  return axios.post(`${config.apiUrl}/meal`, meal, {
+    headers: {
+      Authorization: "Bearer " + storedData.token,
+    },
+  });
 };
 
 export const getMeal = (mealType: string, date: string): Promise<MealFoods> => {
+  const storedData = JSON.parse(localStorage.getItem("userData"));
   return axios
-    .get(`${config.apiUrl}/meal?mealType=${mealType}&date=${date}`)
+    .get(`${config.apiUrl}/meal?mealType=${mealType}&date=${date}`, {
+      headers: {
+        Authorization: "Bearer " + storedData.token,
+      },
+    })
     .then((res) => res.data);
 };
 
 export const getMeals = (date: string): Promise<MealFoods> => {
+  const storedData = JSON.parse(localStorage.getItem("userData"));
   return axios
-    .get(`${config.apiUrl}/meals?date=${date}`)
+    .get(`${config.apiUrl}/meals?date=${date}`, {
+      headers: {
+        Authorization: "Bearer " + storedData.token,
+      },
+    })
     .then((res) => res.data);
 };
 
 export const getMealsCalories = (date: string): Promise<MealsCalories> => {
+  const storedData = JSON.parse(localStorage.getItem("userData"));
   return axios
-    .get(`${config.apiUrl}/mealsCalories?date=${date}`)
+    .get(`${config.apiUrl}/mealsCalories?date=${date}`, {
+      headers: {
+        Authorization: "Bearer " + storedData.token,
+      },
+    })
     .then((res) => res.data);
 };
 
 export const getTotalDayCalories = (): Promise<number> => {
-  return axios.get(`${config.apiUrl}/totalDayCalories`).then((res) => res.data);
+  const storedData = JSON.parse(localStorage.getItem("userData"));
+  return axios
+    .get(`${config.apiUrl}/totalDayCalories`, {
+      headers: {
+        Authorization: "Bearer " + storedData.token,
+      },
+    })
+    .then((res) => res.data);
 };
