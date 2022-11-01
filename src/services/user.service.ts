@@ -1,6 +1,7 @@
 import axios from "axios";
 import config from "../config.json";
 import { User } from "../types/user.type";
+import { defaultHeaders } from "../utils/auth";
 
 export const login = async (email: string, password: string) => {
   return axios
@@ -21,21 +22,15 @@ export const register = async (email: string, password: string) => {
 };
 
 export const onboard = async (userData: Omit<User, "email">) => {
-  const storedData = JSON.parse(localStorage.getItem("userData"));
   return axios.put(`${config.apiUrl}/user`, userData, {
-    headers: {
-      Authorization: "Bearer " + storedData.token,
-    },
+    headers: defaultHeaders(),
   });
 };
 
-export const getUser = async (token: string): Promise<User> => {
-  const storedData = JSON.parse(localStorage.getItem("userData"));
+export const getUser = async (): Promise<User> => {
   return axios
     .get(`${config.apiUrl}/user`, {
-      headers: {
-        Authorization: "Bearer " + storedData.token,
-      },
+      headers: defaultHeaders(),
     })
     .then((res) => res.data);
 };

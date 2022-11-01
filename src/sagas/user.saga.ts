@@ -12,17 +12,9 @@ function* login(action) {
   const { email, password } = action.payload;
 
   try {
-    const resData = yield userService.login(email, password);
-    console.log(resData);
-    const tokenExpirationDate = new Date(new Date().getTime() + 1000 * 60 * 60);
-    localStorage.setItem(
-      "userData",
-      JSON.stringify({
-        userId: resData.userId,
-        token: resData.token,
-        expiration: tokenExpirationDate.toISOString(),
-      })
-    );
+    const resToken = yield userService.login(email, password);
+
+    localStorage.setItem("token", resToken.token);
     window.location.href = "/";
   } catch (ex) {
     yield put(displayLoginError());
@@ -30,7 +22,7 @@ function* login(action) {
 }
 
 function* logout() {
-  localStorage.removeItem("userData");
+  localStorage.removeItem("token");
   window.location.href = "/login";
 }
 
@@ -40,15 +32,7 @@ function* register(action) {
   try {
     const resData = yield userService.register(email, password);
 
-    const tokenExpirationDate = new Date(new Date().getTime() + 1000 * 60 * 60);
-    localStorage.setItem(
-      "userData",
-      JSON.stringify({
-        userId: resData.userId,
-        token: resData.token,
-        expiration: tokenExpirationDate.toISOString(),
-      })
-    );
+    localStorage.setItem("token", resData.token);
     window.location.href = "/";
   } catch (ex) {
     yield put(displayRegisterError());
@@ -66,14 +50,12 @@ function* onboard(action) {
 
 function* getUserData() {
   try {
-    //take the token from localstorage and send in getUser
-    const storedData = JSON.parse(localStorage.getItem("userData"));
+    const token = localStorage.getItem("token");
+    let user = undefined;
 
-    let user = false;
-    if (storedData) {
-      user = yield userService.getUser(storedData.token);
+    if (token) {
+      user = yield userService.getUser();
     }
-    console.log(user);
     if (user) {
       yield put(loggedIn(user));
       yield put({ type: sagaActions.FETCH_WEIGHT_HISTORY });
