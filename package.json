@@ -2,6 +2,9 @@
   "homepage": "http://noambiton21.github.io/lose-it-frontend",
   "name": "lose-it-web",
   "version": "0.1.0",
+  "engines": {
+    "node": "17.2.0"
+  },
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.4",
