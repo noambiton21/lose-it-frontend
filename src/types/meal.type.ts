@@ -24,6 +24,10 @@ export type MealFood = {
   edit: boolean;
   id: string;
   mealType: string;
+  serving_unit: string;
+  nf_total_fat: number;
+  nf_protein: number;
+  nf_sugars: number;
 };
 
 export type FoodOptionDetails = FoodOptionDetail[];
@@ -41,4 +45,12 @@ export type FoodOption = {
   photo: {
     thumb: string;
   };
+};
+
+export type FoodDetails = {
+  nf_calories: number;
+  serving_unit: string;
+  nf_total_fat: number;
+  nf_protein: number;
+  nf_sugars: number;
 };

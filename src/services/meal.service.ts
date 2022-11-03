@@ -5,6 +5,7 @@ import {
   MealOptions,
   FoodOptionDetails,
   MealsCalories,
+  FoodDetails,
 } from "../types/meal.type";
 import config from "../config.json";
 import { defaultHeaders } from "../utils/auth";
@@ -27,7 +28,7 @@ export const getFoodOptions = (
     .then((res) => res.data);
 };
 
-export const getFoodCalories = (foodName: string): Promise<number> => {
+export const getFoodCalories = (foodName: string): Promise<FoodDetails> => {
   return axios
     .get(`${config.apiUrl}/food-calories?query=${foodName}`, {
       headers: defaultHeaders(),

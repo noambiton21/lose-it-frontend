@@ -8,7 +8,7 @@ import {
   TableRow,
 } from "@mui/material";
 import React from "react";
-import { MealFoods } from "../../../../../types/meal.type";
+import { MealFoods, FoodDetails } from "../../../../../types/meal.type";
 import { FoodRow } from "../FoodRow/FoodRow";
 
 export type FoodTableProps = {
@@ -20,7 +20,11 @@ export type FoodTableProps = {
     name: string,
     serving: number,
     calories: number,
-    imageUrl: string
+    imageUrl: string,
+    serving_unit: string,
+    nf_total_fat: number,
+    nf_protein: number,
+    nf_sugars: number
   ) => void;
 };
 
@@ -37,7 +41,7 @@ export const FoodTable = ({
           <TableRow>
             <TableCell sx={{ fontWeight: "bold" }}>Food Name</TableCell>
             <TableCell align="center" sx={{ fontWeight: "bold" }}>
-              Serving (g)
+              Serving
             </TableCell>
             <TableCell align="center" sx={{ fontWeight: "bold" }}>
               Calories
@@ -56,8 +60,24 @@ export const FoodTable = ({
                   name: string,
                   serving: number,
                   calories: number,
-                  imageUrl: string
-                ) => onRowSave(index, name, serving, calories, imageUrl)}
+                  imageUrl: string,
+                  serving_unit: string,
+                  nf_total_fat: number,
+                  nf_protein: number,
+                  nf_sugars: number
+                ) =>
+                  onRowSave(
+                    index,
+                    name,
+                    serving,
+                    calories,
+                    imageUrl,
+                    serving_unit,
+                    nf_total_fat,
+                    nf_protein,
+                    nf_sugars
+                  )
+                }
                 onEdit={() => onRowEdit(index)}
               />
             ))}

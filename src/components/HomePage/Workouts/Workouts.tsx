@@ -23,7 +23,7 @@ export const Workouts = () => {
             justifyContent: "space-between",
             "@media": {
               [theme.breakpoints.down("lg")]: {
-                width: "80%",
+                width: "100%",
               },
             },
           }}

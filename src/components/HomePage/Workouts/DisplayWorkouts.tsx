@@ -32,7 +32,13 @@ const DisplayWorkouts = ({ workout }: DisplayWorkoutProps) => {
             {workout.activity}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {`You ${workout.activity} for ${workout.workoutTime} minutes, reached a pace of ${workout.heartRate} heartbeats and thus burned ${workout.caloriesBurned} calories`}
+            {`You ${workout.activity} for ${
+              workout.workoutTime
+            } minutes, reached a pace of ${
+              workout.heartRate
+            } heartbeats and thus burned ${Math.abs(
+              workout.caloriesBurned
+            )} calories`}
           </Typography>
         </CardContent>
       </CardActionArea>

@@ -18,6 +18,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useAppSelector } from "../../../hooks/typed-redux";
+import { useTheme } from "@mui/material/styles";
 
 ChartJS.register(
   CategoryScale,
@@ -33,6 +34,7 @@ export const WeightChart = () => {
   const { isLoading, hasError, history } = useAppSelector(
     (state) => state.weightHistory
   );
+  const theme = useTheme();
 
   const labels = history?.map(({ timestamp }) =>
     new Date(timestamp).toLocaleDateString()
@@ -50,7 +52,17 @@ export const WeightChart = () => {
   };
 
   return (
-    <Box width="72%" margin="auto">
+    <Box
+      width="72%"
+      margin="auto"
+      sx={{
+        "@media": {
+          [theme.breakpoints.down("lg")]: {
+            width: "90%",
+          },
+        },
+      }}
+    >
       <Card>
         <CardContent>
           <Typography variant="h5">Your weight journey</Typography>

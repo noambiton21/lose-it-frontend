@@ -13,12 +13,14 @@ import { getFoodOptions } from "../../../../../services/meal.service";
 import {
   FoodOptions,
   MealFood,
+  FoodDetails,
   FoodOptionDetails,
 } from "../../../../../types/meal.type";
 import { FoodAutocompleteOption } from "../FoodRow/FoodRow";
 
 export type FoodRowAutocompleteProps = {
   food: MealFood;
+
   selectedFood: FoodAutocompleteOption;
   onFoodSelect: (selectedFood: FoodAutocompleteOption) => void;
 };
@@ -29,7 +31,7 @@ export const FoodRowAutocomplete = ({
   food,
 }: FoodRowAutocompleteProps) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const debouncedSearchTerm = useDebounce(searchTerm, 1000);
+  const debouncedSearchTerm = useDebounce(searchTerm, 800);
   const [isLoadingFoodOptions, setIsLoadingFoodOptions] = useState(false);
   const [foodOptions, setFoodOptions] = useState<FoodAutocompleteOption[]>([]);
 

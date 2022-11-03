@@ -23,7 +23,7 @@ export const Meals = () => {
             width: "30%",
             "@media": {
               [theme.breakpoints.down("lg")]: {
-                width: "80%",
+                width: "100%",
               },
             },
           }}

@@ -41,10 +41,11 @@ export const CalorieGoal = () => {
       sumBurnedCalories = workout.reduce((accumulator, w) => {
         return accumulator + w.caloriesBurned;
       }, 0);
-      setCaloriesBurned(sumBurnedCalories);
+      setCaloriesBurned(Math.abs(sumBurnedCalories));
     }
     const updatedLinearProgress = (
-      (Number(totalDayCalories) / (user.calorieGoal + sumBurnedCalories)) *
+      (Number(totalDayCalories) /
+        (user.calorieGoal + Math.abs(sumBurnedCalories))) *
       100
     ).toFixed();
     if (Number(updatedLinearProgress) > 100) {
@@ -59,12 +60,12 @@ export const CalorieGoal = () => {
       <Typography variant="h5" gutterBottom>
         {!isLoading && !hasError && totalDayCalories ? (
           <>
-            Calories goal: {Math.trunc(Number(totalDayCalories))} /
+            Daily calories goal: {Math.trunc(Number(totalDayCalories))} /
             {user.calorieGoal + caloriesBurned}
           </>
         ) : (
           <>
-            Calories goal: {0} /{user.calorieGoal + caloriesBurned}
+            Daily calories goal: {0} /{user.calorieGoal + caloriesBurned}
           </>
         )}
       </Typography>
