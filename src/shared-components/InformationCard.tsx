@@ -1,31 +1,58 @@
-import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material"
-import React from "react"
+import {
+  Box,
+  CardActionArea,
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+} from "@mui/material";
+import React from "react";
+import { useTheme } from "@mui/material/styles";
 
 export type InformationCardProps = {
-    title: string;
-    subtitle: string;
-    imageUrl: string;
-}
+  title: string;
+  subtitle: string;
+  imageUrl: string;
+};
 
-export const InformationCard = ({ title, subtitle, imageUrl }: InformationCardProps) => {
-    return (
-        <Card sx={{ display: 'flex', margin: "40px auto", width: "80%", justifyContent: 'space-between' }}>
-            <Box sx={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
-                <CardContent sx={{ flex: '1 0 auto' }}>
-                    <Typography component="div" variant="h5">
-                        {title}
-                    </Typography>
-                    <Typography variant="subtitle1" color="text.secondary" component="div">
-                        {subtitle}
-                    </Typography>
-                </CardContent>
-            </Box>
-            <CardMedia
-                component="img"
-                sx={{ width: 200 }}
-                image={imageUrl}
-                alt="Information Card Cover"
-            />
-        </Card>
-    )
-}
+export const InformationCard = ({
+  title,
+  subtitle,
+  imageUrl,
+}: InformationCardProps) => {
+  const theme = useTheme();
+
+  return (
+    <Box
+      sx={{
+        margin: "40px auto",
+        width: "30%",
+        justifyContent: "space-between",
+        "@media": {
+          [theme.breakpoints.down("lg")]: {
+            width: "90%",
+          },
+        },
+      }}
+    >
+      <Card sx={{ mb: 3 }}>
+        <CardActionArea>
+          <CardMedia
+            component="img"
+            height="140"
+            image={imageUrl}
+            alt="Information Card Cover"
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              {title}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {subtitle}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+      </Card>
+    </Box>
+  );
+};

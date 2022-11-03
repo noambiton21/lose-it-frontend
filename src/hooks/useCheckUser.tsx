@@ -8,6 +8,7 @@ export const useUser = () => {
 
   useEffect(() => {
     if (isUserLoaded && !isLoggedIn) {
+      localStorage.removeItem("token");
       window.location.href = "/login";
     }
   }, [isLoggedIn, isUserLoaded]);

@@ -7,7 +7,7 @@ import {
   DialogTitle,
   TextField,
 } from "@mui/material";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -17,17 +17,18 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/typed-redux";
 import { DatePicker } from "../../../shared-components/DatePicker";
 import moment from "moment";
 import { sagaActions } from "../../../sagas/sagaActions";
+import { getUserWeight } from "../../../services/weightHistory.service";
 
 const calculateCaloriesBurned = (gender, age, weight, heartRate, time) => {
   let caloriesThatBurned = 0;
   if (gender === "M") {
     caloriesThatBurned =
-      (age * 0.2017 + weight * 0.09036 + heartRate * 0.6309 - -55.0969) *
-      (time / 4.184);
+      (time * (0.6309 * heartRate + 0.1988 * weight + 0.2017 * age - 55.0969)) /
+      4.184;
   } else {
     caloriesThatBurned =
-      (age * 0.074 + weight * 0.05741 + heartRate * 0.4472 - -20.4022) *
-      (time / 4.184);
+      (time * (0.4472 * heartRate - 0.1263 * weight + 0.074 * age - 20.4022)) /
+      4.184;
   }
   return Math.round(caloriesThatBurned);
 };
@@ -41,7 +42,14 @@ export const AddWorkoutDialog = () => {
   const [weight, setWeight] = useState(1);
   const [timestamp, setTimestamp] = useState(moment().startOf("day"));
   const [activity, setActivity] = useState("");
-  const [caloriesBurned, setCaloriesBurned] = useState(0);
+
+  useEffect(() => {
+    const fetchWeight = async () => {
+      const userWeight = await getUserWeight();
+      setWeight(userWeight);
+    };
+    fetchWeight();
+  }, []);
 
   const handleChangeActivity = (event: SelectChangeEvent) => {
     setActivity(event.target.value as string);
@@ -111,16 +119,7 @@ export const AddWorkoutDialog = () => {
           onChange={(e) => setWorkoutTime(Number(e.target.value))}
           variant="standard"
         />
-        <TextField
-          autoFocus
-          margin="dense"
-          label="Weight (kg)"
-          type="number"
-          fullWidth
-          value={weight}
-          onChange={(e) => setWeight(Number(e.target.value))}
-          variant="standard"
-        />
+
         <Box height="20px" />
         <DatePicker
           value={timestamp}

@@ -2,32 +2,39 @@ import React from "react";
 import { InformationCard } from "../../../shared-components/InformationCard";
 import { useAppSelector } from "../../../hooks/typed-redux";
 import DisplayWorkouts from "./DisplayWorkouts";
-import Card from "@mui/material/Card";
+import Box from "@mui/material/Box";
+import { useTheme } from "@mui/material/styles";
 
 export const Workouts = () => {
   const { workout, isLoading, hasError } = useAppSelector(
     (state) => state.workout
   );
-  console.log(workout);
+
+  const theme = useTheme();
 
   return (
     <>
       {!isLoading && !hasError && workout?.length > 0 ? (
-        <Card
+        <Box
           sx={{
             display: "block",
             margin: "20px auto",
-            width: "80%",
+            width: "30%",
             justifyContent: "space-between",
-            backgroundColor: "#fafbfb",
+            "@media": {
+              [theme.breakpoints.down("lg")]: {
+                width: "100%",
+              },
+            },
           }}
         >
+          <h3>Your daily activity </h3>
           {workout?.map((work, index) => (
             <div key={index}>
               <DisplayWorkouts workout={work} />
             </div>
           ))}
-        </Card>
+        </Box>
       ) : (
         <InformationCard
           title="Enjoy workouts"

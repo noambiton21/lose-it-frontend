@@ -1,7 +1,7 @@
 import { Box, Button } from "@mui/material";
 import React, { useCallback, useState, useEffect } from "react";
 import { FoodTable } from "./FoodTable/FoodTable";
-import { MealFoods } from "../../../../types/meal.type";
+import { MealFoods, FoodDetails } from "../../../../types/meal.type";
 import { v4 as uuidv4 } from "uuid";
 import { addMeal, getMeal } from "../../../../services/meal.service";
 import { sagaActions } from "../../../../sagas/sagaActions";
@@ -16,6 +16,13 @@ export type MealProps = {
 export const Meal = ({ mealType, onDone, date }: MealProps) => {
   const [tempFoods, setTempFoods] = useState<MealFoods>([]);
   const dispatch = useAppDispatch();
+
+  const foodDetailsDefaultValues = {
+    serving_unit: "",
+    nf_total_fat: 0,
+    nf_protein: 0,
+    nf_sugars: 0,
+  };
 
   useEffect(() => {
     getMeal(mealType, date).then((foods: MealFoods) => {
@@ -49,7 +56,11 @@ export const Meal = ({ mealType, onDone, date }: MealProps) => {
       name: string,
       serving: number,
       calories: number,
-      imageUrl: string
+      imageUrl: string,
+      serving_unit: string,
+      nf_total_fat: number,
+      nf_protein: number,
+      nf_sugars: number
     ) => {
       const tempFoodsCopy = [...tempFoods];
       tempFoodsCopy[index].foodName = name;
@@ -67,6 +78,10 @@ export const Meal = ({ mealType, onDone, date }: MealProps) => {
         mealType: mealType,
         id: uuidv4(),
         imageUrl: imageUrl,
+        serving_unit,
+        nf_total_fat,
+        nf_protein,
+        nf_sugars,
       };
       console.log(newFood);
 
@@ -118,6 +133,10 @@ export const Meal = ({ mealType, onDone, date }: MealProps) => {
               edit: true,
               id: uuidv4(),
               mealType: mealType,
+              serving_unit: "",
+              nf_total_fat: 0,
+              nf_protein: 0,
+              nf_sugars: 0,
             },
           ]);
         }}

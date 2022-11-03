@@ -12,21 +12,27 @@ function* login(action) {
   const { email, password } = action.payload;
 
   try {
-    //const token =
-    yield userService.login(email, password);
+    const resToken = yield userService.login(email, password);
 
+    localStorage.setItem("token", resToken.token);
     window.location.href = "/";
   } catch (ex) {
     yield put(displayLoginError());
   }
 }
 
+function* logout() {
+  localStorage.removeItem("token");
+  window.location.href = "/login";
+}
+
 function* register(action) {
   const { email, password } = action.payload;
 
   try {
-    //const token =
-    yield userService.register(email, password);
+    const resData = yield userService.register(email, password);
+
+    localStorage.setItem("token", resData.token);
     window.location.href = "/";
   } catch (ex) {
     yield put(displayRegisterError());
@@ -44,9 +50,12 @@ function* onboard(action) {
 
 function* getUserData() {
   try {
-    //take the token from localstorage and send in getUser
-    const user = yield userService.getUser();
+    const token = localStorage.getItem("token");
+    let user = undefined;
 
+    if (token) {
+      user = yield userService.getUser();
+    }
     if (user) {
       yield put(loggedIn(user));
       yield put({ type: sagaActions.FETCH_WEIGHT_HISTORY });
@@ -65,4 +74,5 @@ export default function* userSaga() {
   yield takeLatest(sagaActions.REGISTER, register);
   yield takeLatest(sagaActions.GET_USER, getUserData);
   yield takeLatest(sagaActions.ONBOARD_USER, onboard);
+  yield takeLatest(sagaActions.LOGOUT, logout);
 }

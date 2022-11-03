@@ -3,6 +3,7 @@ import {
   LinearProgress,
   linearProgressClasses,
   styled,
+  CircularProgress,
   Typography,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
@@ -26,6 +27,8 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 
 export const CalorieGoal = () => {
   const { user } = useUser();
+  const { workout } = useAppSelector((state) => state.workout);
+  const [caloriesBurned, setCaloriesBurned] = useState(0);
 
   const [linearProgress, setLinearProgress] = useState("0");
   const { totalDayCalories, isLoading, hasError } = useAppSelector(
@@ -33,8 +36,16 @@ export const CalorieGoal = () => {
   );
 
   useEffect(() => {
+    let sumBurnedCalories = 0;
+    if (workout) {
+      sumBurnedCalories = workout.reduce((accumulator, w) => {
+        return accumulator + w.caloriesBurned;
+      }, 0);
+      setCaloriesBurned(Math.abs(sumBurnedCalories));
+    }
     const updatedLinearProgress = (
-      (Number(totalDayCalories) / user.calorieGoal) *
+      (Number(totalDayCalories) /
+        (user.calorieGoal + Math.abs(sumBurnedCalories))) *
       100
     ).toFixed();
     if (Number(updatedLinearProgress) > 100) {
@@ -42,19 +53,19 @@ export const CalorieGoal = () => {
     } else {
       setLinearProgress(updatedLinearProgress);
     }
-  }, [totalDayCalories]);
+  }, [totalDayCalories, workout]);
 
   return (
     <Box margin="30px 0">
       <Typography variant="h5" gutterBottom>
         {!isLoading && !hasError && totalDayCalories ? (
           <>
-            Calories goal: {Math.trunc(Number(totalDayCalories))} /
-            {user.calorieGoal}
+            Daily calories goal: {Math.trunc(Number(totalDayCalories))} /
+            {user.calorieGoal + caloriesBurned}
           </>
         ) : (
           <>
-            Calories goal: {0} /{user.calorieGoal}
+            Daily calories goal: {0} /{user.calorieGoal + caloriesBurned}
           </>
         )}
       </Typography>
@@ -62,6 +73,16 @@ export const CalorieGoal = () => {
         variant="determinate"
         value={Number(linearProgress)}
       />
+      <Typography variant="caption" margin="30px 0">
+        {!isLoading && !hasError && totalDayCalories ? (
+          <>
+            Remaining:{" "}
+            {Math.trunc(
+              user.calorieGoal + caloriesBurned - Number(totalDayCalories)
+            )}
+          </>
+        ) : null}
+      </Typography>
     </Box>
   );
 };

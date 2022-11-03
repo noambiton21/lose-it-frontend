@@ -5,53 +5,71 @@ import {
   MealOptions,
   FoodOptionDetails,
   MealsCalories,
+  FoodDetails,
 } from "../types/meal.type";
 import config from "../config.json";
+import { defaultHeaders } from "../utils/auth";
 
 export const getMealOptions = (): Promise<MealOptions> => {
-  return axios.get(`${config.apiUrl}/meal-options`).then((res) => res.data);
+  return axios
+    .get(`${config.apiUrl}/meal-options`, {
+      headers: defaultHeaders(),
+    })
+    .then((res) => res.data);
 };
-
-// export const addMealOptions = async (type: String) => {
-//   return axios.post(`${config.apiUrl}/meal-options`, type);
-// };
 
 export const getFoodOptions = (
   searchTerm: string
 ): Promise<FoodOptionDetails> => {
   return axios
-    .get(`${config.apiUrl}/food?query=${searchTerm}`)
+    .get(`${config.apiUrl}/food?query=${searchTerm}`, {
+      headers: defaultHeaders(),
+    })
     .then((res) => res.data);
 };
 
-export const getFoodCalories = (foodName: string): Promise<number> => {
+export const getFoodCalories = (foodName: string): Promise<FoodDetails> => {
   return axios
-    .get(`${config.apiUrl}/food-calories?query=${foodName}`)
+    .get(`${config.apiUrl}/food-calories?query=${foodName}`, {
+      headers: defaultHeaders(),
+    })
     .then((res) => res.data);
 };
 
 export const addMeal = async (meal: MealFood): Promise<void> => {
-  return axios.post(`${config.apiUrl}/meal`, meal);
+  return axios.post(`${config.apiUrl}/meal`, meal, {
+    headers: defaultHeaders(),
+  });
 };
 
 export const getMeal = (mealType: string, date: string): Promise<MealFoods> => {
   return axios
-    .get(`${config.apiUrl}/meal?mealType=${mealType}&date=${date}`)
+    .get(`${config.apiUrl}/meal?mealType=${mealType}&date=${date}`, {
+      headers: defaultHeaders(),
+    })
     .then((res) => res.data);
 };
 
 export const getMeals = (date: string): Promise<MealFoods> => {
   return axios
-    .get(`${config.apiUrl}/meals?date=${date}`)
+    .get(`${config.apiUrl}/meals?date=${date}`, {
+      headers: defaultHeaders(),
+    })
     .then((res) => res.data);
 };
 
 export const getMealsCalories = (date: string): Promise<MealsCalories> => {
   return axios
-    .get(`${config.apiUrl}/mealsCalories?date=${date}`)
+    .get(`${config.apiUrl}/mealsCalories?date=${date}`, {
+      headers: defaultHeaders(),
+    })
     .then((res) => res.data);
 };
 
 export const getTotalDayCalories = (): Promise<number> => {
-  return axios.get(`${config.apiUrl}/totalDayCalories`).then((res) => res.data);
+  return axios
+    .get(`${config.apiUrl}/totalDayCalories`, {
+      headers: defaultHeaders(),
+    })
+    .then((res) => res.data);
 };
