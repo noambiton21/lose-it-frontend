@@ -1,5 +1,4 @@
 {
-  "homepage": "http://noambiton21.github.io/lose-it-frontend",
   "name": "lose-it-web",
   "version": "0.1.0",
   "engines": {
@@ -41,8 +40,6 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
