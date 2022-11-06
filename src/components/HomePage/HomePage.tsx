@@ -50,8 +50,8 @@ export const HomePage = () => {
         >
           <CardMedia
             component="img"
-            height="190"
-            image={"/running.jpg"}
+            height="200"
+            image={"/cycling.jpg"}
             alt={"cycling"}
           />
           <Box paddingTop="30px">

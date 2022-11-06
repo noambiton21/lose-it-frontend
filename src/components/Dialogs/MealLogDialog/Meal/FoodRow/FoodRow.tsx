@@ -12,6 +12,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { FoodRowAutocomplete } from "../FoodRowAutocomplete/FoodRowAutocomplete";
 import { getFoodCalories } from "../../../../../services/meal.service";
+import { useTheme } from "@mui/material/styles";
 
 export type FoodRowProps = {
   food: MealFood;
@@ -46,6 +47,8 @@ export const FoodRow = ({ food, onDelete, onSave, onEdit }: FoodRowProps) => {
   const [servingUnit, setServingUnit] = useState(food.serving_unit);
   const [sugar, setSugar] = useState(food.nf_sugars);
 
+  const theme = useTheme();
+
   useEffect(() => {
     if (selectedFood?.label !== "") {
       getFoodCalories(selectedFood?.label).then((foodDetails: FoodDetails) => {
@@ -72,7 +75,33 @@ export const FoodRow = ({ food, onDelete, onSave, onEdit }: FoodRowProps) => {
   console.log(tempCalories);
   return (
     <TableRow>
-      <TableCell component="th" scope="row">
+      <TableCell
+        component="th"
+        scope="row"
+        sx={{
+          "@media": {
+            [theme.breakpoints.down("sm")]: {
+              display: "block",
+              width: "100%",
+              textAlign: "left",
+              position: "relative",
+            },
+          },
+        }}
+      >
+        <Typography
+          sx={{
+            "@media": {
+              [theme.breakpoints.up("sm")]: {
+                display: "none",
+              },
+            },
+            fontWeight: "bold",
+            textAlign: "left",
+          }}
+        >
+          {"Food name"}
+        </Typography>
         <FoodRowAutocomplete
           food={food}
           selectedFood={selectedFood}
@@ -84,7 +113,32 @@ export const FoodRow = ({ food, onDelete, onSave, onEdit }: FoodRowProps) => {
             : ""}
         </Typography>
       </TableCell>
-      <TableCell align="center">
+      <TableCell
+        align="center"
+        sx={{
+          "@media": {
+            [theme.breakpoints.down("sm")]: {
+              display: "block",
+              width: "100%",
+              textAlign: "left",
+              position: "relative",
+            },
+          },
+        }}
+      >
+        <Typography
+          sx={{
+            "@media": {
+              [theme.breakpoints.up("sm")]: {
+                display: "none",
+              },
+            },
+            fontWeight: "bold",
+            textAlign: "left",
+          }}
+        >
+          {"Serving"}
+        </Typography>
         {food.edit ? (
           <TextField
             variant="standard"
@@ -99,10 +153,46 @@ export const FoodRow = ({ food, onDelete, onSave, onEdit }: FoodRowProps) => {
           food.servingSize
         )}
       </TableCell>
-      <TableCell align="center">
+      <TableCell
+        align="center"
+        sx={{
+          "@media": {
+            [theme.breakpoints.down("sm")]: {
+              display: "block",
+              width: "100%",
+              textAlign: "left",
+              position: "relative",
+            },
+          },
+        }}
+      >
+        <Typography
+          sx={{
+            "@media": {
+              [theme.breakpoints.up("sm")]: {
+                display: "none",
+              },
+            },
+            fontWeight: "bold",
+            textAlign: "left",
+          }}
+        >
+          {"Calories"}
+        </Typography>
         {tempCalories === 0 || isNaN(tempCalories) ? "-" : tempCalories}
       </TableCell>
-      <TableCell>
+      <TableCell
+        sx={{
+          "@media": {
+            [theme.breakpoints.down("sm")]: {
+              display: "block",
+              width: "100%",
+              textAlign: "left",
+              position: "relative",
+            },
+          },
+        }}
+      >
         {food.edit ? (
           <IconButton
             size="small"

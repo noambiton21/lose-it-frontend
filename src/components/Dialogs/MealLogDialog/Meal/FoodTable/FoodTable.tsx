@@ -10,6 +10,7 @@ import {
 import React from "react";
 import { MealFoods, FoodDetails } from "../../../../../types/meal.type";
 import { FoodRow } from "../FoodRow/FoodRow";
+import { useTheme } from "@mui/material/styles";
 
 export type FoodTableProps = {
   foods: MealFoods;
@@ -34,22 +35,104 @@ export const FoodTable = ({
   onRowSave,
   onRowDelete,
 }: FoodTableProps) => {
+  const theme = useTheme();
   return (
     <TableContainer component={Paper}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell sx={{ fontWeight: "bold" }}>Food Name</TableCell>
-            <TableCell align="center" sx={{ fontWeight: "bold" }}>
+      <Table
+        sx={{
+          "@media": {
+            [theme.breakpoints.down("sm")]: {
+              display: "block",
+              width: "100%",
+            },
+          },
+        }}
+      >
+        <TableHead
+          sx={{
+            "@media": {
+              [theme.breakpoints.down("sm")]: {
+                display: "none",
+              },
+            },
+          }}
+        >
+          <TableRow
+            sx={{
+              "@media": {
+                [theme.breakpoints.down("sm")]: {
+                  mb: 15,
+                  display: "block",
+                  width: "100%",
+                },
+              },
+            }}
+          >
+            <TableCell
+              sx={{
+                fontWeight: "bold",
+                "@media": {
+                  [theme.breakpoints.down("sm")]: {
+                    display: "block",
+                    width: "100%",
+                    pl: 30,
+                    right: 0,
+                    textAlign: "left",
+                    position: "relative",
+                  },
+                },
+              }}
+            >
+              Food Name
+            </TableCell>
+            <TableCell
+              align="center"
+              sx={{
+                fontWeight: "bold",
+                "@media": {
+                  [theme.breakpoints.down("sm")]: {
+                    display: "block",
+                    width: "100%",
+                    pl: 30,
+                    right: 0,
+                    textAlign: "left",
+                    position: "relative",
+                  },
+                },
+              }}
+            >
               Serving
             </TableCell>
-            <TableCell align="center" sx={{ fontWeight: "bold" }}>
+            <TableCell
+              align="center"
+              sx={{
+                fontWeight: "bold",
+                "@media": {
+                  [theme.breakpoints.down("sm")]: {
+                    display: "block",
+                    width: "100%",
+                    pl: 30,
+                    right: 0,
+                    textAlign: "left",
+                    position: "relative",
+                  },
+                },
+              }}
+            >
               Calories
             </TableCell>
-            <TableCell></TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
+        <TableBody
+          sx={{
+            "@media": {
+              [theme.breakpoints.down("sm")]: {
+                display: "block",
+                width: "100%",
+              },
+            },
+          }}
+        >
           {foods.length > 0 &&
             foods.map((food, index) => (
               <FoodRow
