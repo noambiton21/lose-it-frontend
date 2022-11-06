@@ -38,12 +38,7 @@ const DisplayMeal = ({ meals }: DisplayMealProps) => {
         }}
       >
         {meals.map((meal: MealFood, index) => (
-          <Item
-            sx={{
-              mr: 3,
-            }}
-            key={index}
-          >
+          <Item key={index}>
             <Avatar alt={meal.foodName} src={meal.imageUrl} />
             <Typography variant="body1" color="text.primary">
               {`${meal.servingSize} ${meal.foodName}`}
